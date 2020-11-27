@@ -104,7 +104,5 @@ if __name__ == "__main__":
 
     arvore = No(0)
 
-    while i < 10:
-        arvore.insere(meuvetor[i])
 
     
