@@ -70,7 +70,6 @@ class No:
                 self.rotacaorightEsquerda()
 
     def insere(self, data):
-        print(data)
         if data <= self.data:
             if not self.left:
                 self.left = No(data)
@@ -83,26 +82,54 @@ class No:
                 self.right.insere(data)
         self.executaBalanco()   
 
-    def imprimeArvore(self, indent = 0):
-        print (' ' * indent + str(self.data))
-        if self.left:
-            self.left.imprimeArvore(indent + 2)
-        if self.right:
-            self.right.imprimeArvore(indent + 2)
+    def Preorder( self, ipe ):
 
+        if( ipe is None ):
+            return
+        print(ipe.data,end = ' ')
+        self.Preorder(ipe.left)
+        self.Preorder(ipe.right) 
+
+    def search(self, data, flag):
+        flag = flag + 1
+        if not self:
+            return None
+        
+        if self.data == data:
+            return self.data, flag 
+
+        if data < self.data:
+            return self.left.search(data, flag)
+        
+        return self.right.search(data, flag) 
 
 if __name__ == "__main__":
-    import random
+    ipe = No(8)
 
-    meuvetor = list(range(10))
-    for i in meuvetor:
-        meuvetor[i] = i + 1
+    arquivo = open('menor.txt', 'r')
+    for linha in arquivo:
+        ipe.insere(int(linha))
+    arquivo.close()
 
-    print('Vetor arrumadin:\n',meuvetor)
-    random.shuffle(meuvetor)
-    print('Vetor bagunçado:\n',meuvetor)
+    #flag = 0
+    #print('\n\nPonta: \n')
+    #arquivo = open('ponta.txt', 'r')
+    #for linha in arquivo:
+    #    print(ipe.search(int(linha), flag))
+    #arquivo.close()
 
-    arvore = No(0)
+    #flag = 0
+    #print('\n\nMeio à esquerda: \n')
+    #arquivo = open('meioL.txt', 'r')
+    #for linha in arquivo:
+    #    print(ipe.search(int(linha), flag))
+    #arquivo.close()
 
+    #flag = 0
+    #print('\n\nMeio à direita: \n')
+    #arquivo = open('meioR.txt', 'r')
+    #for linha in arquivo:
+    #    print(ipe.search(int(linha), flag))
+    #arquivo.close()
 
-    
+    ipe.Preorder(ipe)
