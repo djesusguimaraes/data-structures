@@ -59,16 +59,15 @@ for linha in arquivo:
     print(Root.search(int(linha), flag))
 arquivo.close()
 
-print('\n\nMeio à esquerda: \n')
 flag = 0
-
+print('\n\nMeio à esquerda: \n')
 arquivo = open('meioL.txt', 'r')
 for linha in arquivo:
     print(Root.search(int(linha), flag))
 arquivo.close()
 
-print('\n\nMeio à direita: \n')
 flag = 0
+print('\n\nMeio à direita: \n')
 arquivo = open('meioR.txt', 'r')
 for linha in arquivo:
     print(Root.search(int(linha), flag))
