@@ -70,6 +70,8 @@ class No:
                 self.rotacaoDireitaEsquerda()
 
     def insere(self, data):
+        if data == self.data:
+            return
         if data <= self.data:
             if not self.left:
                 self.left = No(data)
@@ -83,56 +85,48 @@ class No:
         self.executaBalanco()
 
     def Preorder( self, ipe ):
-
         if( ipe is None ):
             return
-        print(ipe.data,end = ' ')
+        print(ipe.data)
         self.Preorder(ipe.left)
         self.Preorder(ipe.right) 
 
     def search(self, data, flag):
-        flag = flag + 1
-        
+        flag += 1
         if self.data == data:
             return self.data, flag 
-
         if data < self.data:
             return self.left.search(data, flag)
-        
         return self.right.search(data, flag) 
 
-if __name__ == "__main__":
+import sys
 
-    import sys
+arquivo = open('arrayFull.txt', 'r')
+ipe = No(int(arquivo.readline()))
+for linha in arquivo:
+    ipe.insere(int(linha))
+arquivo.close()
 
-    ipe = No(3536)
+flag = 0
+sys.stdout = open('AVL_OutPontas.txt', 'w')
+arquivo = open('arrayPontas.txt', 'r')
+for linha in arquivo:
+    print(ipe.search(int(linha), flag))
+arquivo.close()
+sys.stdout.close()
 
-    arquivo = open('arrayFull.txt', 'r')
-    for linha in arquivo:
-        ipe.insere(int(linha))
-    arquivo.close()
+flag = 0
+sys.stdout = open('AVL_OutMid_L.txt', 'w')
+arquivo = open('arrayMid_L.txt', 'r')
+for linha in arquivo:
+    print(ipe.search(int(linha), flag))
+arquivo.close()
+sys.stdout.close()
 
-    flag = 0
-    sys.stdout = open('AVL_OutPontas.txt', 'w')
-    arquivo = open('arrayPontas.txt', 'r')
-    for linha in arquivo:
-        print(ipe.search(int(linha), flag))
-    arquivo.close()
-    sys.stdout.close()
-
-
-    flag = 0
-    sys.stdout = open('AVL_OutMid_L.txt', 'w')
-    arquivo = open('arrayMid_L.txt', 'r')
-    for linha in arquivo:
-        print(ipe.search(int(linha), flag))
-    arquivo.close()
-    sys.stdout.close()
-
-    flag = 0
-    sys.stdout = open('AVL_OutMid_R.txt', 'w')
-    arquivo = open('arrayMid_R.txt', 'r')
-    for linha in arquivo:
-        print(ipe.search(int(linha), flag))
-    arquivo.close()
-    sys.stdout.close()
+flag = 0
+sys.stdout = open('AVL_OutMid_R.txt', 'w')
+arquivo = open('arrayMid_R.txt', 'r')
+for linha in arquivo:
+    print(ipe.search(int(linha), flag))
+arquivo.close()
+sys.stdout.close()
