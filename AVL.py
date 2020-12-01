@@ -18,6 +18,57 @@ class No:
         self.left = left
         self.right = right
 
+    def balanco(self):
+        prof_esq = 0
+        if self.left:
+            prof_esq = self.left.profundidade()
+        prof_dir = 0
+        if self.right:
+            prof_dir = self.right.profundidade()
+        return prof_esq - prof_dir
+
+    def profundidade(self):
+        prof_esq = 0
+        if self.left:
+            prof_esq = self.left.profundidade()
+        prof_dir = 0
+        if self.right:
+            prof_dir = self.right.profundidade()
+        return 1 + max(prof_esq, prof_dir)
+
+    def rotacaoEsquerda(self):
+        self.data, self.right.data = self.right.data, self.data
+        old_esquerda = self.left
+        self.setaFilhos(self.right, self.right.right)
+        self.left.setaFilhos(old_esquerda, self.left.left)
+
+    def rotacaoDireita(self):
+        self.data, self.left.data = self.left.data, self.data
+        old_direita = self.right
+        self.setaFilhos(self.left.left, self.left)
+        self.right.setaFilhos(self.right.right, old_direita)
+
+    def rotacaoEsquerdaDireita(self):
+        self.left.rotacaoEsquerda()
+        self.rotacaoDireita()
+
+    def rotacaoDireitaEsquerda(self):
+        self.right.rotacaoDireita()
+        self.rotacaoEsquerda()
+
+    def executaBalanco(self):
+        bal = self.balanco()
+        if bal > 1:
+            if self.left.balanco() > 0:
+                self.rotacaoDireita()
+            else:
+                self.rotacaoEsquerdaDireita()
+        elif bal < -1:
+            if self.right.balanco() < 0:
+                self.rotacaoEsquerda()
+            else:
+                self.rotacaoDireitaEsquerda()
+
     def insere(self, data):
         if data <= self.data:
             if not self.left:
@@ -31,57 +82,6 @@ class No:
                 self.right.insere(data)
         self.executaBalanco()
 
-    def executaBalanco(self):
-        bal = self.balanco()
-        if bal > 1:
-            if self.left.balanco() > 0:
-                self.rotacaoright()
-            else:
-                self.rotacaoEsquerdaright()
-        elif bal < -1:
-            if self.right.balanco() < 0:
-                self.rotacaoEsquerda()
-            else:
-                self.rotacaorightEsquerda()
-
-    def balanco(self):
-        deep_left = 0
-        if self.left:
-            deep_left = self.left.deep()
-        deep_right = 0
-        if self.right:
-            deep_right = self.right.deep()
-        return deep_left - deep_right
-
-    def deep(self):
-        deep_left = 0
-        if self.left:
-            deep_left = self.left.deep()
-        deep_right = 0
-        if self.right:
-            deep_right = self.right.deep()
-        return 1 + max(deep_left, deep_right)
-
-    def rotacaoEsquerda(self):
-        self.data, self.right.data = self.right.data, self.data
-        old_esquerda = self.left
-        self.setaFilhos(self.right, self.right.right)
-        self.left.setaFilhos(old_esquerda, self.left.left)
-
-    def rotacaoright(self):
-        self.data, self.left.data = self.left.data, self.data
-        old_right = self.right
-        self.setaFilhos(self.left.left, self.left)
-        self.right.setaFilhos(self.right.right, old_right)
-
-    def rotacaoEsquerdaright(self):
-        self.left.rotacaoEsquerda()
-        self.rotacaoright()
-
-    def rotacaorightEsquerda(self):
-        self.right.rotacaoright()
-        self.rotacaoEsquerda()
-
     def Preorder( self, ipe ):
 
         if( ipe is None ):
@@ -92,8 +92,6 @@ class No:
 
     def search(self, data, flag):
         flag = flag + 1
-        if not self:
-            return None
         
         if self.data == data:
             return self.data, flag 
@@ -104,30 +102,37 @@ class No:
         return self.right.search(data, flag) 
 
 if __name__ == "__main__":
-    ipe = No(5767)
 
-    arquivo = open('vetorCompleto.txt', 'r')
+    import sys
+
+    ipe = No(3536)
+
+    arquivo = open('arrayFull.txt', 'r')
     for linha in arquivo:
         ipe.insere(int(linha))
     arquivo.close()
 
     flag = 0
-    print('\n\nPonta: ')
-    arquivo = open('ponta.txt', 'r')
+    sys.stdout = open('AVL_OutPontas.txt', 'w')
+    arquivo = open('arrayPontas.txt', 'r')
     for linha in arquivo:
         print(ipe.search(int(linha), flag))
     arquivo.close()
+    sys.stdout.close()
+
 
     flag = 0
-    print('\n\nMeio à esquerda: ')
-    arquivo = open('meioL.txt', 'r')
+    sys.stdout = open('AVL_OutMid_L.txt', 'w')
+    arquivo = open('arrayMid_L.txt', 'r')
     for linha in arquivo:
         print(ipe.search(int(linha), flag))
     arquivo.close()
+    sys.stdout.close()
 
     flag = 0
-    print('\n\nMeio à direita: ')
-    arquivo = open('meioR.txt', 'r')
+    sys.stdout = open('AVL_OutMid_R.txt', 'w')
+    arquivo = open('arrayMid_R.txt', 'r')
     for linha in arquivo:
         print(ipe.search(int(linha), flag))
     arquivo.close()
+    sys.stdout.close()

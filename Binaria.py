@@ -2,23 +2,26 @@ from os import close
 
 
 class Tree:
-    def __init__(self, value):
-        self.value = value
+    def __init__(self):
+        self.setaTree(None)
         self.right = None
         self.left = None
 
-    def insere(self,value):
-        if (self.value is None):
-            self.value = value
+    def setaTree(self, value):
+        self.value = value
+
+    def insere(self, value):
+        if not self.value:
+            self.value = int(value)
         else:
             if( value < self.value ):
                 if (self.left is None): 
-                    self.left = Tree(value)
+                    self.left = value
                 else:
                     self.left.insere(value)
             elif( value > self.value ):
                 if ( self.right is None):
-                    self.right = Tree(value)
+                    self.right = value
                 else:
                     self.right.insere(value)
 
@@ -44,31 +47,38 @@ class Tree:
         
         self.Preorder(Root.right)
 
-Root = Tree(5767)
+import sys
 
-arquivo = open('vetorCompleto.txt', 'r')
+Root = Tree()
+
+arquivo = open('arrayFull.txt', 'r')
 for linha in arquivo:
     Root.insere(int(linha))
 arquivo.close()
-#lista = arquivo.readlines() # readlinesssssss
-flag = 0
 
-print('\n\nPonta: \n')
-arquivo = open('ponta.txt', 'r')
-for linha in arquivo:
-    print(Root.search(int(linha), flag))
-arquivo.close()
+Root.Preorder(Root)
 
-flag = 0
-print('\n\nMeio à esquerda: \n')
-arquivo = open('meioL.txt', 'r')
-for linha in arquivo:
-    print(Root.search(int(linha), flag))
-arquivo.close()
+#flag = 0
+#sys.stdout = open('BinariaOutPontas.txt', 'w')
+#arquivo = open('arrayPontas.txt', 'r')
+#for linha in arquivo:
+#    print(Root.search(int(linha), flag))
+#arquivo.close()
+#sys.stdout.close()
 
-flag = 0
-print('\n\nMeio à direita: \n')
-arquivo = open('meioR.txt', 'r')
-for linha in arquivo:
-    print(Root.search(int(linha), flag))
-arquivo.close()
+
+#flag = 0
+#sys.stdout = open('BinariaOutMid_L.txt', 'w')
+#arquivo = open('arrayMid_L.txt', 'r')
+#for linha in arquivo:
+#    print(Root.search(int(linha), flag))
+#arquivo.close()
+#sys.stdout.close()
+
+#flag = 0
+#sys.stdout = open('BinariaOutMid_R.txt', 'w')
+#arquivo = open('arrayMid_R.txt', 'r')
+#for linha in arquivo:
+#    print(Root.search(int(linha), flag))
+#arquivo.close()
+#sys.stdout.close()
