@@ -12,7 +12,7 @@ arrayReversed = array.copy()
 arrayReversed.reverse()
 arrayMed = int(len(array)/2)
 
-sys.stdout = open('arrayPontas.txt', 'w')
+sys.stdout = open('arrayConjInterno.txt', 'w')
 while flag < 25:
     print(array[flag])
     print(arrayReversed[flag])
@@ -21,7 +21,7 @@ sys.stdout.close()
 
 
 cont = 1
-sys.stdout = open('arrayMid_L.txt', 'w')
+sys.stdout = open('arrayConjMenor.txt', 'w')
 while cont <= 50:
     print(array[arrayMed - cont])
     cont += 1
@@ -29,7 +29,7 @@ sys.stdout.close()
    
 
 cont = 0
-sys.stdout = open('arrayMid_R.txt', 'w')
+sys.stdout = open('arrayConjMaior.txt', 'w')
 while cont < 50:
     print(array[arrayMed + cont])
     cont += 1

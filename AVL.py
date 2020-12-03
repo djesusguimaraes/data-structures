@@ -109,24 +109,24 @@ for linha in arquivo:
 arquivo.close()
 
 flag = 0
-sys.stdout = open('AVL_OutPontas.txt', 'w')
-arquivo = open('arrayPontas.txt', 'r')
+sys.stdout = open('AVLConjInterno.txt', 'w')
+arquivo = open('arrayConjInterno.txt', 'r')
 for linha in arquivo:
     ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
 flag = 0
-sys.stdout = open('AVL_OutMid_L.txt', 'w')
-arquivo = open('arrayMid_L.txt', 'r')
+sys.stdout = open('AVLConjMenor.txt', 'w')
+arquivo = open('arrayConjMenor.txt', 'r')
 for linha in arquivo:
     ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
 flag = 0
-sys.stdout = open('AVL_OutMid_R.txt', 'w')
-arquivo = open('arrayMid_R.txt', 'r')
+sys.stdout = open('AVLConjMaior.txt', 'w')
+arquivo = open('arrayConjMaior.txt', 'r')
 for linha in arquivo:
     ipe.search(int(linha), flag)
 arquivo.close()

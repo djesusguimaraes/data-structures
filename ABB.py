@@ -47,24 +47,24 @@ for linha in arquivo:
 arquivo.close()
 
 flag = 0
-sys.stdout = open('BinariaOutPontas.txt', 'w')
-arquivo = open('arrayPontas.txt', 'r')
+sys.stdout = open('ABBConjInterno.txt', 'w')
+arquivo = open('arrayConjInterno.txt', 'r')
 for linha in arquivo:
     Root.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
 flag = 0
-sys.stdout = open('BinariaOutMid_L.txt', 'w')
-arquivo = open('arrayMid_L.txt', 'r')
+sys.stdout = open('ABBConjMenor.txt', 'w')
+arquivo = open('arrayConjMenor.txt', 'r')
 for linha in arquivo:
     Root.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
 flag = 0
-sys.stdout = open('BinariaOutMid_R.txt', 'w')
-arquivo = open('arrayMid_R.txt', 'r')
+sys.stdout = open('ABBConjMaior.txt', 'w')
+arquivo = open('arrayConjMaior.txt', 'r')
 for linha in arquivo:
     Root.search(int(linha), flag)
 arquivo.close()
