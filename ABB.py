@@ -31,26 +31,26 @@ class No:
         
         return self.right.search(value, flag)
 
-    def Preorder( self, Root):
-        if not Root:
+    def Preorder( self, ipe):
+        if not ipe:
             return
-        print(Root.value)
-        self.Preorder(Root.left)
-        self.Preorder(Root.right)
+        print(ipe.value)
+        self.Preorder(ipe.left)
+        self.Preorder(ipe.right)
 
 import sys
 
 arquivo = open('arrayFull.txt', 'r')
-Root = No(int(arquivo.readline()))
+ipe = No(int(arquivo.readline()))
 for linha in arquivo:
-    Root.insere(int(linha))
+    ipe.insere(int(linha))
 arquivo.close()
 
 flag = 0
 sys.stdout = open('ABBConjInterno.txt', 'w')
 arquivo = open('arrayConjInterno.txt', 'r')
 for linha in arquivo:
-    Root.search(int(linha), flag)
+    ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
@@ -58,7 +58,7 @@ flag = 0
 sys.stdout = open('ABBConjMenor.txt', 'w')
 arquivo = open('arrayConjMenor.txt', 'r')
 for linha in arquivo:
-    Root.search(int(linha), flag)
+    ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
@@ -66,6 +66,6 @@ flag = 0
 sys.stdout = open('ABBConjMaior.txt', 'w')
 arquivo = open('arrayConjMaior.txt', 'r')
 for linha in arquivo:
-    Root.search(int(linha), flag)
+    ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()

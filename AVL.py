@@ -18,23 +18,23 @@ class No:
         self.left = left
         self.right = right
 
-    def balanco(self):
-        prof_esq = 0
+    def balance(self):
+        deepLeft = 0
         if self.left:
-            prof_esq = self.left.profundidade()
-        prof_dir = 0
+            deepLeft = self.left.deep()
+        deepRight = 0
         if self.right:
-            prof_dir = self.right.profundidade()
-        return prof_esq - prof_dir
+            deepRight = self.right.deep()
+        return deepLeft - deepRight
 
-    def profundidade(self):
-        prof_esq = 0
+    def deep(self):
+        deepLeft = 0
         if self.left:
-            prof_esq = self.left.profundidade()
-        prof_dir = 0
+            deepLeft = self.left.deep()
+        deepRight = 0
         if self.right:
-            prof_dir = self.right.profundidade()
-        return 1 + max(prof_esq, prof_dir)
+            deepRight = self.right.deep()
+        return 1 + max(deepLeft, deepRight)
 
     def rotacaoEsquerda(self):
         self.data, self.right.data = self.right.data, self.data
@@ -48,41 +48,41 @@ class No:
         self.setaFilhos(self.left.left, self.left)
         self.right.setaFilhos(self.right.right, old_direita)
 
-    def rotacaoEsquerdaDireita(self):
+    def rotacaoDuplaDireita(self):
         self.left.rotacaoEsquerda()
         self.rotacaoDireita()
 
-    def rotacaoDireitaEsquerda(self):
+    def rotacaoDuplaEsquerda(self):
         self.right.rotacaoDireita()
         self.rotacaoEsquerda()
 
-    def executaBalanco(self):
-        bal = self.balanco()
+    def verify(self):
+        bal = self.balance()
         if bal > 1:
-            if self.left.balanco() > 0:
+            if self.left.balance() > 0:
                 self.rotacaoDireita()
             else:
-                self.rotacaoEsquerdaDireita()
+                self.rotacaoDuplaDireita()
         elif bal < -1:
-            if self.right.balanco() < 0:
+            if self.right.balance() < 0:
                 self.rotacaoEsquerda()
             else:
-                self.rotacaoDireitaEsquerda()
+                self.rotacaoDuplaEsquerda()
 
-    def insere(self, data):
+    def insert(self, data):
         if data == self.data:
             return
         if data <= self.data:
             if not self.left:
                 self.left = No(data)
             else:
-                self.left.insere(data)
+                self.left.insert(data)
         else:
             if not self.right:
                 self.right = No(data)
             else:
-                self.right.insere(data)
-        self.executaBalanco()
+                self.right.insert(data)
+        self.verify()
 
     def Preorder( self, ipe ):
         if( ipe is None ):
@@ -105,7 +105,7 @@ import sys
 arquivo = open('arrayFull.txt', 'r')
 ipe = No(int(arquivo.readline()))
 for linha in arquivo:
-    ipe.insere(int(linha))
+    ipe.insert(int(linha))
 arquivo.close()
 
 flag = 0
