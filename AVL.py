@@ -94,6 +94,7 @@ class No:
     def search(self, data, flag):
         flag += 1
         if self.data == data:
+            print(flag)
             return self.data, flag 
         if data < self.data:
             return self.left.search(data, flag)
@@ -111,7 +112,7 @@ flag = 0
 sys.stdout = open('AVL_OutPontas.txt', 'w')
 arquivo = open('arrayPontas.txt', 'r')
 for linha in arquivo:
-    print(ipe.search(int(linha), flag))
+    ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
@@ -119,7 +120,7 @@ flag = 0
 sys.stdout = open('AVL_OutMid_L.txt', 'w')
 arquivo = open('arrayMid_L.txt', 'r')
 for linha in arquivo:
-    print(ipe.search(int(linha), flag))
+    ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
@@ -127,6 +128,6 @@ flag = 0
 sys.stdout = open('AVL_OutMid_R.txt', 'w')
 arquivo = open('arrayMid_R.txt', 'r')
 for linha in arquivo:
-    print(ipe.search(int(linha), flag))
+    ipe.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()

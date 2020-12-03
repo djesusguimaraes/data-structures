@@ -23,6 +23,7 @@ class No:
     def search(self, value, flag):
         flag += 1
         if self.value == value:
+            print(flag)
             return self.value, flag 
 
         if value < self.value:
@@ -49,7 +50,7 @@ flag = 0
 sys.stdout = open('BinariaOutPontas.txt', 'w')
 arquivo = open('arrayPontas.txt', 'r')
 for linha in arquivo:
-    print(Root.search(int(linha), flag))
+    Root.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
@@ -57,7 +58,7 @@ flag = 0
 sys.stdout = open('BinariaOutMid_L.txt', 'w')
 arquivo = open('arrayMid_L.txt', 'r')
 for linha in arquivo:
-    print(Root.search(int(linha), flag))
+    Root.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
 
@@ -65,6 +66,6 @@ flag = 0
 sys.stdout = open('BinariaOutMid_R.txt', 'w')
 arquivo = open('arrayMid_R.txt', 'r')
 for linha in arquivo:
-    print(Root.search(int(linha), flag))
+    Root.search(int(linha), flag)
 arquivo.close()
 sys.stdout.close()
