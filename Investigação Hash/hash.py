@@ -27,54 +27,49 @@ class Hash:
      def cheia(self):
           return len(self.tab) == self.tam_max
 
-     def imprime(self):
-          for i in self.tab:
-               print("Hash[%d] = " %i, end="")
-               print (self.tab[i])
-     
-     def busca(self, key):
-          pos = self.divisao(key)
-          if self.tab.get(pos) == None: # se esta posição não existe
-               return -1 #saida imediata
-          if self.tab[pos] == key: # se o item esta na posição indicada pela função hash
-               return pos
-          else:
-               for i in self.tab: # busca do item em toda hash (pois ele pode ter sido inserido apos colisão)
-                    if self.tab[i]==key:
-                         return i
-          return -1
-
-     def insere(self, item, colidiu):
+     def insere(self, item):
+          colidiu = 0
           if self.cheia():
-               return colidiu
+               print('Tabela Hash Cheia')
+               return 
 
           pos = self.divisao(item)
 
           if self.tab.get(pos) == None: # se posicao vazia
                self.tab[pos] = item
+               return colidiu
           else: # se posicao ocupada
                colidiu += 1
                while True:
                     if self.tab[pos] == item: # se o item ja foi cadastrado
-                         print("-> ATENCAO Esse item ja foi cadastrado")
-                         return
+                         return colidiu
                     if pos == (self.tam_max - 1):
                          pos = -1
                     pos += 1 # incrementa mais uma posição
                     if self.tab.get(pos) == None:
                          self.tab[pos] = item
-                         print("-> Inserido apos colisao HASH[%d]" %pos)
-                         break              
+                         return colidiu
 # fim Classe Hash
+import sys
 
 tamanhoHash = 500
 tab = Hash(tamanhoHash)
+tabe = Hash(tamanhoHash)
 
-colidiu = 0
+colisoesDivisao = 0
+colisoesDobra = 0
+
+sys.stdout = open('output.txt', 'w')
 arquivo = open('input.txt', 'r')
+
 for linha in arquivo:
-     print(tab.insere(int(linha), colidiu))
+     colisoesDivisao += tab.insere(int(linha))
+     colisoesDobra += tabe.insere(int(linha))
+
+print('Divisao:',colisoesDivisao,'colisoes')
+print('Dobra:', colisoesDobra,'colisoes')
 arquivo.close()
+sys.stdout.close()
 
 
 
