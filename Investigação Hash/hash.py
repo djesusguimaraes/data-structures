@@ -24,16 +24,31 @@ class Hash:
                x *= 2
           return soma
 
+     def digitos(self, item):
+
+          return
+
+     def apaga(self):
+          pos = 0
+          while pos < self.tam_max:
+               del self.tab[pos]
+               pos += 1
+
      def cheia(self):
           return len(self.tab) == self.tam_max
 
-     def insere(self, item):
+     def insere(self, item, flag):
           colidiu = 0
           if self.cheia():
-               print('Tabela Hash Cheia')
+               self.apaga()
                return 
-
-          pos = self.divisao(item)
+          pos = 0
+          if flag < 1:
+               pos = self.divisao(item)
+          elif flag < 2:
+               pos = self.dobra(item)
+          #else:
+          #     pos = self.digitos(item)
 
           if self.tab.get(pos) == None: # se posicao vazia
                self.tab[pos] = item
@@ -49,6 +64,7 @@ class Hash:
                     if self.tab.get(pos) == None:
                          self.tab[pos] = item
                          return colidiu
+                    colidiu += 1
 # fim Classe Hash
 import sys
 
@@ -58,17 +74,26 @@ tabe = Hash(tamanhoHash)
 
 colisoesDivisao = 0
 colisoesDobra = 0
+colisoesDigitos = 0
 
 sys.stdout = open('output.txt', 'w')
 arquivo = open('input.txt', 'r')
-
 for linha in arquivo:
-     colisoesDivisao += tab.insere(int(linha))
-     colisoesDobra += tabe.insere(int(linha))
-
+     colisoesDivisao += tab.insere(int(linha), 0)
 print('Divisao:',colisoesDivisao,'colisoes')
+arquivo.close()
+
+arquivo = open('input.txt', 'r')
+for linha in arquivo:
+     colisoesDobra += tabe.insere(int(linha), 1)
 print('Dobra:', colisoesDobra,'colisoes')
 arquivo.close()
+
+'''arquivo = open('input.txt', 'r')
+for linha in arquivo:
+     colisoesDigitos += tabe.insere(int(linha), 2)
+print('Dobra:', colisoesDigitos,'colisoes')
+arquivo.close()'''
 sys.stdout.close()
 
 

@@ -1,1 +1,2 @@
-382
+Divisao: 2590 colisoes
+Dobra: 87460 colisoes
