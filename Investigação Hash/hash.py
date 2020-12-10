@@ -1,4 +1,3 @@
-# Tabela Hash sem tratamento de colisões
 # Criado por: profa. Divani Barbosa Gavinier
 # Curriculo Lattes: http://lattes.cnpq.br/8503400830635447
 # divanibarbosa@gmail.com
@@ -9,9 +8,13 @@ class Hash:
           self.tab = {}
           self.tam_max = tam
 
-     def funcaohash(self, chave):
-          v = int(chave)
-          return v%self.tam_max
+     def divisao(self, key):
+          v = int(key)
+          return (v % int(self.tam_max))
+
+     def dobra(self, key):
+          v = format(key, "010b")
+          
 
      def cheia(self):
           return len(self.tab) == self.tam_max
@@ -20,52 +23,77 @@ class Hash:
           for i in self.tab:
                print("Hash[%d] = " %i, end="")
                print (self.tab[i])
-
-     def apaga(self, chave):
-          pos = self.busca(chave)
-          if pos != -1:
-               del self.tab[pos]
-               print("-> Dado da posicao %d apagado" %pos) 
-          else:
-               print("Item nao encontrado")
-
-     def busca(self, chave):
-          pos = self.funcaohash(chave)
+     
+     def busca(self, key):
+          pos = self.divisao(key)
           if self.tab.get(pos) == None: # se esta posição não existe
                return -1 #saida imediata
-          if self.tab[pos] == chave: 
+          if self.tab[pos] == key: # se o item esta na posição indicada pela função hash
                return pos
+          else:
+               for i in self.tab: # busca do item em toda hash (pois ele pode ter sido inserido apos colisão)
+                    if self.tab[i]==key:
+                         return i
           return -1
 
-     def insere(self, item):
+     def insere(self, item, colidiu):
           if self.cheia():
-               print("-> ATENÇÃO Tabela Hash CHEIA")
-               return
-          pos = self.funcaohash(item)
+               return colidiu
+          pos = self.divisao(item)
           if self.tab.get(pos) == None: # se posicao vazia
                self.tab[pos] = item
-               print("-> Inserido HASH[%d]" %pos)
           else: # se posicao ocupada
-               print("-> Ocorreu uma colisao na posicao %d" %pos)             
-# fim Classe Hashlinear
+               colidiu += 1
+               while True:
+                    if self.tab[pos] == item: # se o item ja foi cadastrado
+                         print("-> ATENCAO Esse item ja foi cadastrado")
+                         return
+                    if pos == (self.tam_max - 1):
+                         pos = -1
+                    pos += 1 # incrementa mais uma posição
+                    if self.tab.get(pos) == None:
+                         self.tab[pos] = item
+                         print("-> Inserido apos colisao HASH[%d]" %pos)
+                         break              
+# fim Classe Hash
 
-tamanhoHash = 7
+tamanhoHash = 500
 tab = Hash(tamanhoHash)
+
+colidiu = 0
+arquivo = open('input.txt', 'r')
+for linha in arquivo:
+     print(tab.insere(int(linha), colidiu))
+arquivo.close()
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 print("\n****************************************************")
-print("      Tabela HASH Sem Colisões (%d itens) " %tamanhoHash)
+print("      Tabela HASH Colisoes Linear (%d itens) " %tamanhoHash)
 print("****************************************************")
 for i in range (0,tamanhoHash,1):
-     print("\nInserindo elemento %d" %(i + 1));
-     item = input(" - Forneca valor numerico inteiro: ")
+     print("\nInserindo item %d" %(i + 1));
+     item = input(" - Forneca valor: ")
      tab.insere(item)
-item = input("\n - Forneca valor numerico inteiro para buscar: ")
+item = input("\n - Forneca valor para buscar: ")
 pos = tab.busca(item)
 if pos == -1:
-     print("Item nao encontrado")
+     print("-> Item nao encontrado")
 else:
-     print("Item encontrado na posicao: ", pos)
-item = input("\n - Forneca valor numerico inteiro para apagar: ")
+     print("-> Item encontrado na posicao: ", pos)
+item = input("\n - Forneca valor para apagar: ")
 tab.apaga(item)
 print("\nImprimindo conteudo")
 tab.imprime()
 print("\n")
+"""
