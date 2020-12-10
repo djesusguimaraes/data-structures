@@ -13,8 +13,16 @@ class Hash:
           return (v % int(self.tam_max))
 
      def dobra(self, key):
-          v = format(key, "010b")
-          
+          v = f'{key:010b}'
+          y = [v[i:i+5] for i in range(0, len(v), 5)]
+          result = str(int(y[0]) ^ int(y[1]))[::-1]
+
+          soma = 0
+          x = 1
+          for i in range(len(result)):
+               soma += int(result[i])*x    
+               x *= 2
+          return soma
 
      def cheia(self):
           return len(self.tab) == self.tam_max
@@ -39,7 +47,9 @@ class Hash:
      def insere(self, item, colidiu):
           if self.cheia():
                return colidiu
+
           pos = self.divisao(item)
+
           if self.tab.get(pos) == None: # se posicao vazia
                self.tab[pos] = item
           else: # se posicao ocupada
