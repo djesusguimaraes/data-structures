@@ -10,8 +10,8 @@
 """
 
 class No:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, value):
+        self.value = value
         self.setaFilhos(None, None)
 
     def setaFilhos(self, left, right):
@@ -37,13 +37,13 @@ class No:
         return 1 + max(deepLeft, deepRight)
 
     def rotacaoEsquerda(self):
-        self.data, self.right.data = self.right.data, self.data
+        self.value, self.right.value = self.right.value, self.value
         old_esquerda = self.left
         self.setaFilhos(self.right, self.right.right)
         self.left.setaFilhos(old_esquerda, self.left.left)
 
     def rotacaoDireita(self):
-        self.data, self.left.data = self.left.data, self.data
+        self.value, self.left.value = self.left.value, self.value
         old_direita = self.right
         self.setaFilhos(self.left.left, self.left)
         self.right.setaFilhos(self.right.right, old_direita)
@@ -69,65 +69,53 @@ class No:
             else:
                 self.rotacaoDuplaEsquerda()
 
-    def insert(self, data):
-        if data == self.data:
-            return
-        if data <= self.data:
+    def insert(self, value):
+        if value == self.value:
+            return 
+        if value <= self.value:
             if not self.left:
-                self.left = No(data)
+                self.left = No(value)
             else:
-                self.left.insert(data)
+                self.left.insert(value)
         else:
             if not self.right:
-                self.right = No(data)
+                self.right = No(value)
             else:
-                self.right.insert(data)
+                self.right.insert(value)
         self.verify()
 
     def Preorder( self, ipe ):
         if( ipe is None ):
             return
-        print(ipe.data)
+        print(ipe.value)
         self.Preorder(ipe.left)
         self.Preorder(ipe.right) 
 
-    def search(self, data, flag):
+    def search(self, value, flag):
         flag += 1
-        if self.data == data:
-            print(flag)
-            return self.data, flag 
-        if data < self.data:
-            return self.left.search(data, flag)
-        return self.right.search(data, flag) 
+        if self.value == value:
+            return flag 
+        if value < self.value:
+            return self.left.search(value, flag)
+        return self.right.search(value, flag) 
 
 import sys
 
-arquivo = open('arrayFull.txt', 'r')
+arquivo = open('input.txt', 'r')
 ipe = No(int(arquivo.readline()))
 for linha in arquivo:
     ipe.insert(int(linha))
 arquivo.close()
 
 flag = 0
-sys.stdout = open('AVLConjInterno.txt', 'w')
-arquivo = open('arrayConjInterno.txt', 'r')
+count = 0
+sys.stdout = open('AVLoutput.txt', 'w')
+arquivo = open('search.txt', 'r')
 for linha in arquivo:
-    ipe.search(int(linha), flag)
-arquivo.close()
-sys.stdout.close()
-
-flag = 0
-sys.stdout = open('AVLConjMenor.txt', 'w')
-arquivo = open('arrayConjMenor.txt', 'r')
-for linha in arquivo:
-    ipe.search(int(linha), flag)
-arquivo.close()
-sys.stdout.close()
-
-flag = 0
-sys.stdout = open('AVLConjMaior.txt', 'w')
-arquivo = open('arrayConjMaior.txt', 'r')
-for linha in arquivo:
-    ipe.search(int(linha), flag)
+    if count >= 50:
+        print('\n')
+        count = 0
+    print(ipe.search(int(linha), flag))
+    count += 1
 arquivo.close()
 sys.stdout.close()

@@ -23,9 +23,7 @@ class No:
     def search(self, value, flag):
         flag += 1
         if self.value == value:
-            print(flag)
-            return self.value, flag 
-
+            return flag 
         if value < self.value:
             return self.left.search(value, flag)
         
@@ -40,32 +38,21 @@ class No:
 
 import sys
 
-arquivo = open('arrayFull.txt', 'r')
+arquivo = open('input.txt', 'r')
 ipe = No(int(arquivo.readline()))
 for linha in arquivo:
     ipe.insere(int(linha))
 arquivo.close()
 
 flag = 0
-sys.stdout = open('ABBConjInterno.txt', 'w')
-arquivo = open('arrayConjInterno.txt', 'r')
+count = 0
+sys.stdout = open('ABBoutput.txt', 'w')
+arquivo = open('search.txt', 'r')
 for linha in arquivo:
-    ipe.search(int(linha), flag)
-arquivo.close()
-sys.stdout.close()
-
-flag = 0
-sys.stdout = open('ABBConjMenor.txt', 'w')
-arquivo = open('arrayConjMenor.txt', 'r')
-for linha in arquivo:
-    ipe.search(int(linha), flag)
-arquivo.close()
-sys.stdout.close()
-
-flag = 0
-sys.stdout = open('ABBConjMaior.txt', 'w')
-arquivo = open('arrayConjMaior.txt', 'r')
-for linha in arquivo:
-    ipe.search(int(linha), flag)
+    if count >= 50:
+        print('\n')
+        count = 0
+    print(ipe.search(int(linha), flag))
+    count += 1
 arquivo.close()
 sys.stdout.close()
