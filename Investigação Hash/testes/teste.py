@@ -1,5 +1,4 @@
-from operator import itemgetter
-import operator
+
 import sys
 decimal = 10
 array = list(range(500))
