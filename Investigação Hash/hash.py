@@ -121,7 +121,7 @@ class Hash():
           while True:
                if key > self.tam_max - 1:
                     key = -1
-               key *= 2 # decrementa mais uma posição
+               key += 1 # decrementa mais uma posição
                if self.tab.get(key) == None:
                     self.tab[key] = item
                     return colisaoSecundaria
