@@ -42,6 +42,7 @@ while i < decimal:
 i = 0
 j = 0
 desvio = [d1, d2, d3, d4]
+print(desvio)
 digitos = list(range(3))
 aux = max(desvio)
 while i < len(desvio):
@@ -49,3 +50,29 @@ while i < len(desvio):
         digitos[j] = i
         j += 1
     i += 1
+print(digitos)
+
+item = 5971
+i = 0
+digkey = list(range(3)) 
+while i < len(digitos):
+    if digitos[i] == 0:
+        digkey[i] = int(item / pow(decimal, 3))
+    elif digitos[i] == 1:
+        digkey[i] = int((item / pow(decimal, 2)) % decimal)
+    elif digitos[i] == 2:
+        digkey[i] = int((item / decimal) % decimal)
+    else:
+        digkey[i] = int(item % decimal)
+    i += 1
+print(digkey)
+key = 0
+j = 100
+i = 0
+while i < len(digkey):
+    key += int(digkey[i]*j) 
+    j = j / 10
+    i += 1
+if key > len(array):
+    key = key % len(array)
+print(key)

@@ -2,19 +2,21 @@
 # Curriculo Lattes: http://lattes.cnpq.br/8503400830635447
 # divanibarbosa@gmail.com
 
-# class No:
-#      def __init__(self, item, next = None):
-#           self.item = item
-#           self.next = next
+class No:
+     def __init__(self, item, next = None):
+          self.item = item
+          self.next = next
 
-class Hash():
+class Hash(No):
 
      def __init__(self, tam):
-          self.tab = []
+          No. __init__(self, item = None, next = None)
+          self.tab = {}
           self.tam_max = tam
+          self.inicio = None
 
      def divisao(self, key):
-          return (int(key) % int(self.tam_max)-200)
+          return int(key) % int(self.tam_max)
 
      def dobra(self, key):
           v = f'{key:010b}'
@@ -28,25 +30,104 @@ class Hash():
           return soma
 
      def digitos(self):
-          
+          decimal = 10
+          array = list(range(500))
+          arquivo = open('input.txt', 'r')
+          i = 0 
+          for linha in arquivo:
+               array[i] = int(linha)
+               i += 1
+          arquivo.close()
 
-          return 
+          flag1 = list(range(decimal))
+          flag2 = list(range(decimal))
+          flag3 = list(range(decimal))
+          flag4 = list(range(decimal))
+          for i in range(decimal):
+               flag1[i] = 0
+               flag2[i] = 0
+               flag3[i] = 0
+               flag4[i] = 0
 
-     # def encadeia(self, item, colisaoSecundaria):
-     #      if self.list is None:
-     #           self.list = No(item, None)
-     #      aux = self.list
-     #      while aux.next is not None:
-     #           aux = aux.next
-     #           colisaoSecundaria += 1
-     #      aux.next = No(item, None)
-     #      return colisaoSecundaria
+          i = 0
+          while i < len(array):
+               flag1[int(array[i] / pow(decimal, 3))] += 1
+               flag2[int((array[i] / pow(decimal, 2)) % decimal)] += 1
+               flag3[int((array[i] / decimal) % decimal)] += 1
+               flag4[int(array[i] % decimal)] += 1
+               i += 1
+
+          i = 0
+          d1 = 0
+          d2 = 0
+          d3 = 0
+          d4 = 0
+          while i < decimal:
+               d1 += abs(flag1[i]-len(array)/decimal)  
+               d2 += abs(flag2[i]-len(array)/decimal)  
+               d3 += abs(flag3[i]-len(array)/decimal)  
+               d4 += abs(flag4[i]-len(array)/decimal)  
+               i += 1
+
+          i = 0
+          j = 0
+          desvio = [d1, d2, d3, d4]
+          digitos = list(range(3))
+          aux = max(desvio)
+          while i < len(desvio):
+               if desvio[i] < aux:
+                    digitos[j] = i
+                    j += 1
+               i += 1
+
+          return digitos
+
+     def encadeia(self, item, colisaoSecundaria):
+          if self.inicio is None:
+               self.inicio = No(item, None)
+          aux = self.inicio
+          while aux.next is not None:
+               aux = aux.next
+          aux.next = No(item, None)
+          return colisaoSecundaria
 
      def cheia(self):
           return len(self.tab) == self.tam_max
 
+     # def keydigitos(self, item, flag):
+     #      i = 0
+     #      key = 0
+     #      decimal = 10
+     #      colidiu = 0
+     #      digkey = list(range(3)) 
+     #      while i < len(flag):
+     #           if flag[i] == 0:
+     #                digkey[i] = int(item / pow(decimal, 3))
+     #           elif flag[i] == 1:
+     #                digkey[i] = int((item / pow(decimal, 2)) % decimal)
+     #           elif flag[i] == 2:
+     #                digkey[i] = int((item / decimal) % decimal)
+     #           else:
+     #                digkey[i] = int(item % decimal)
+     #                i += 1
+     #      i = 0
+     #      j = 100
+     #      while i < len(digkey):
+     #           key += int(digkey[i]*j) 
+     #           j = j / 10
+     #           i += 1
+     #      if key > self.tam_max:
+     #           key = key % self.tam_max
+
+     #      if self.tab.get(key) == None: # se posicao vazia
+     #           self.tab[key] = item
+     #           return colidiu
+     #      else:
+     #           colidiu += 1
+     #           return colidiu + self.tratamento(key, item) 
+
      def insere(self, item, flag):
-          #decimal = 10
+          decimal = 10
           colidiu = 0
           if self.cheia():
                return
@@ -56,17 +137,29 @@ class Hash():
                key = self.divisao(item)
           elif flag == -2:
                key = self.dobra(item)
-          # else:
-          #      if flag == 0:
-          #           key = int(item / pow(decimal, 3))
-          #      elif flag == 1:
-          #           key = int((item / pow(decimal, 2)) % decimal)
-          #      elif flag == 2:
-          #           key= int((item / decimal) % decimal)
-          #      else:
-          #           key = int(item % decimal)
+          else:
+               i = 0
+               digkey = list(range(3)) 
+               while i < len(flag):
+                    if flag[i] == 0:
+                         digkey[i] = int(item / pow(decimal, 3))
+                    elif flag[i] == 1:
+                         digkey[i] = int((item / pow(decimal, 2)) % decimal)
+                    elif flag[i] == 2:
+                         digkey[i] = int((item / decimal) % decimal)
+                    else:
+                         digkey[i] = int(item % decimal)
+                         i += 1
+               i = 0
+               j = 100
+               while i < len(digkey):
+                    key += int(digkey[i]*j) 
+                    j = j / 10
+                    i += 1
+               if key > self.tam_max - 1:
+                    key = key % self.tam_max
 
-          if self.tab[key] == None: # se posicao vazia
+          if self.tab.get(key) == None: # se posicao vazia
                self.tab[key] = item
                return colidiu
           else: # se posicao ocupada
@@ -74,15 +167,12 @@ class Hash():
                return colidiu + self.tratamento(key, item)
 
      def tratamento(self, key, item):
-          colisaoSecundaria = 0
+          key = self.tam_max - 1
           while True:
-               if key > self.tam_max - 1:
-                    key = -1
-               key += 1 # decrementa mais uma posição
-               if self.tab[key] == None:
+               key -= 1 # decrementa mais uma posição
+               if self.tab.get(key) == None:
                     self.tab[key] = item
-                    return colisaoSecundaria
-               colisaoSecundaria += 1
+                    return self.encadeia(item, 1)
 
 # fim Classe Hash
 import sys
@@ -110,9 +200,9 @@ print('Dobra:', colisoesDobra,'colisoes')
 arquivo.close()
 
 # arquivo = open('input.txt', 'r')
-# flag = tab.digitos()
+# flag = tab.digitos()                   
 # for linha in arquivo:
-#      colisoesDigitos += taby.insere(int(linha), flag)
+#     colisoesDigitos += taby.insere(int(linha), flag)
 # print('Analise de Digitos:', colisoesDigitos,'colisoes usando os digitos')
 # arquivo.close()
-sys.stdout.close()
+# sys.stdout.close()
