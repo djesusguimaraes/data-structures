@@ -154,7 +154,6 @@ colisoesDivisao = 0
 colisoesDobra = 0
 colisoesDigitos = 0
 
-sys.stdout = open('output.txt', 'w')
 arquivo = open('input.txt', 'r')
 for linha in arquivo:
      colisoesDivisao += tab.insere(int(linha), -1)
@@ -173,4 +172,3 @@ for linha in arquivo:
     colisoesDigitos += taby.insere(int(linha), flag)
 print('Analise de Digitos: %d colisoes usando os digitos d%d, d%d, d%d' % (colisoesDigitos, flag[0]+1, flag[1]+1, flag[2]+1))
 arquivo.close()
-sys.stdout.close()
