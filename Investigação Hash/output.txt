@@ -1,0 +1,3 @@
+Divisao: 494 colisoes
+Dobra: 938 colisoes
+Analise de Digitos: 494 colisoes usando os digitos d2, d3, d4

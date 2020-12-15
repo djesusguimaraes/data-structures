@@ -94,38 +94,6 @@ class Hash(No):
      def cheia(self):
           return len(self.tab) == self.tam_max
 
-     # def keydigitos(self, item, flag):
-     #      i = 0
-     #      key = 0
-     #      decimal = 10
-     #      colidiu = 0
-     #      digkey = list(range(3)) 
-     #      while i < len(flag):
-     #           if flag[i] == 0:
-     #                digkey[i] = int(item / pow(decimal, 3))
-     #           elif flag[i] == 1:
-     #                digkey[i] = int((item / pow(decimal, 2)) % decimal)
-     #           elif flag[i] == 2:
-     #                digkey[i] = int((item / decimal) % decimal)
-     #           else:
-     #                digkey[i] = int(item % decimal)
-     #                i += 1
-     #      i = 0
-     #      j = 100
-     #      while i < len(digkey):
-     #           key += int(digkey[i]*j) 
-     #           j = j / 10
-     #           i += 1
-     #      if key > self.tam_max:
-     #           key = key % self.tam_max
-
-     #      if self.tab.get(key) == None: # se posicao vazia
-     #           self.tab[key] = item
-     #           return colidiu
-     #      else:
-     #           colidiu += 1
-     #           return colidiu + self.tratamento(key, item) 
-
      def insere(self, item, flag):
           decimal = 10
           colidiu = 0
@@ -149,7 +117,7 @@ class Hash(No):
                          digkey[i] = int((item / decimal) % decimal)
                     else:
                          digkey[i] = int(item % decimal)
-                         i += 1
+                    i += 1
                i = 0
                j = 100
                while i < len(digkey):
@@ -167,7 +135,7 @@ class Hash(No):
                return colidiu + self.tratamento(key, item)
 
      def tratamento(self, key, item):
-          key = self.tam_max - 1
+          key = self.tam_max - 1 #seta a chave para a ultima posição da tabela
           while True:
                key -= 1 # decrementa mais uma posição
                if self.tab.get(key) == None:
@@ -199,10 +167,10 @@ for linha in arquivo:
 print('Dobra:', colisoesDobra,'colisoes')
 arquivo.close()
 
-# arquivo = open('input.txt', 'r')
-# flag = tab.digitos()                   
-# for linha in arquivo:
-#     colisoesDigitos += taby.insere(int(linha), flag)
-# print('Analise de Digitos:', colisoesDigitos,'colisoes usando os digitos')
-# arquivo.close()
-# sys.stdout.close()
+arquivo = open('input.txt', 'r')
+flag = tab.digitos()                   
+for linha in arquivo:
+    colisoesDigitos += taby.insere(int(linha), flag)
+print('Analise de Digitos: %d colisoes usando os digitos d%d, d%d, d%d' % (colisoesDigitos, flag[0]+1, flag[1]+1, flag[2]+1))
+arquivo.close()
+sys.stdout.close()
