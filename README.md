@@ -1,5 +1,3 @@
-# ED2
-Repositório com o trabalho de ED2
+# Data Structures
 
-Fala Galera, esse repo aqui foi onde guardei as implementações de ED2, provavelmente você verá coisas erradas aqui, mas provavelmente alguma coisa vai te ajudar, ou espero que ajude.
-Tamo junto! Flw!
+Uma mistrura de trabalhos com estruturas de dados em diversas linguagens de programação, cada um em sua branch
