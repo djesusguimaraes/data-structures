@@ -1,119 +1,120 @@
-# include <stdio.h>
-# include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-typedef struct _Pilha
+char infix[255] = "";
+
+typedef struct _STACKS
 {
     char op;
-    struct _Pilha *prox;
-}Pilha;
+    struct _STACKS *next;
+} STACKS;
 
-void transfereTempPos( Pilha **pPos, Pilha **pTemp, Pilha *aux )
+void transfer(STACKS **stack, STACKS **op_stack, STACKS *aux)
 {
-    aux = ( *pTemp ) -> prox;
-    ( *pTemp ) -> prox = *pPos;
-    *pPos = *pTemp;
-    *pTemp = aux;
+    aux = (*op_stack)->next;
+    (*op_stack)->next = *stack;
+    *stack = *op_stack;
+    *op_stack = aux;
 }
 
-void alocaCharNaPilha( Pilha **pilha, Pilha *aux, char op )
+void stack_up(STACKS **pilha, STACKS *aux, char op)
 {
-    aux = ( Pilha *) malloc( sizeof( Pilha ) );
-    aux -> op = op;  
-    aux -> prox = *pilha;
+    aux = (STACKS *)malloc(sizeof(STACKS));
+    aux->op = op;
+    aux->next = *pilha;
     *pilha = aux;
 }
 
-void leOperacao( Pilha **pPos, Pilha **pTemp )
+void read(STACKS **stack, STACKS **op_stack)
 {
     char op;
-    Pilha *aux;
-    
-    scanf( "%c", &op );
-    while( op != '\n' )
-    {      
+    STACKS *aux;
 
-        switch( op )
+    scanf("%c", &op);
+    while (op != '\n')
+    {
+
+        switch (op)
         {
-            case '+':
-            case '-':
+        case '+':
+        case '-':
 
-                while( ( *pTemp ) && ( (*pTemp) -> op != '(' ) )
-                {
-                    transfereTempPos( &( *pPos ), &( *pTemp ), aux );
-                }
+            while ((*op_stack) && ((*op_stack)->op != '('))
+            {
+                transfer(&(*stack), &(*op_stack), aux);
+            }
 
-                alocaCharNaPilha( &( *pTemp ), aux, op );
-                
-                break;
+            stack_up(&(*op_stack), aux, op);
 
-            case '*':
-            case '/':
+            break;
 
-                while( ( *pTemp ) && ( (*pTemp) -> op != '+' && (*pTemp) -> op != '-'
-                        && (*pTemp) -> op != '(' ) )
-                {        
-                    transfereTempPos( &( *pPos ), &( *pTemp ), aux );
-                }
+        case '*':
+        case '/':
 
-                alocaCharNaPilha( &( *pTemp ), aux, op );
-                
-                break;
+            while ((*op_stack) && ((*op_stack)->op != '+' && (*op_stack)->op != '-' && (*op_stack)->op != '('))
+            {
+                transfer(&(*stack), &(*op_stack), aux);
+            }
 
-            case ')':
-                while( ( *pTemp ) && ( (*pTemp) -> op != '(' ) )
-                {
-                    transfereTempPos( &( *pPos ), &( *pTemp ), aux );
-                }
+            stack_up(&(*op_stack), aux, op);
 
-                if( (*pTemp) && (*pTemp) -> op == '(' )
-                {
-                    aux = *pTemp;
-                    *pTemp = (*pTemp) -> prox;
-                    free( aux );
-                }
-                
-                break;
+            break;
 
-            case '(':
-                alocaCharNaPilha( &( *pTemp ), aux, op );
-                
-                break;
+        case ')':
+            while ((*op_stack) && ((*op_stack)->op != '('))
+            {
+                transfer(&(*stack), &(*op_stack), aux);
+            }
 
-            default:
-                alocaCharNaPilha( &( *pPos ), aux, op );
-                
-                break;
+            if ((*op_stack) && (*op_stack)->op == '(')
+            {
+                aux = *op_stack;
+                *op_stack = (*op_stack)->next;
+                free(aux);
+            }
+
+            break;
+
+        case '(':
+            stack_up(&(*op_stack), aux, op);
+
+            break;
+
+        default:
+            stack_up(&(*stack), aux, op);
+
+            break;
         }
 
-        scanf( "%c", &op );
+        scanf("%c", &op);
     }
 
-    while( *pTemp )
+    while (*op_stack)
     {
-        alocaCharNaPilha( &( *pTemp ), aux, op );
+        transfer(&(*stack), &(*op_stack), aux);
     }
-    
 }
 
-void imprime( Pilha *topo )
+void showing(STACKS *topo)
 {
-    if( topo )
+    if (topo)
     {
-        imprime( topo -> prox );
-        printf( "%c ", topo -> op );
-    }   
+        showing(topo->next);
+        printf("%c ", topo->op);
+    }
 }
 
 int main()
 {
-    Pilha *pPos = NULL;
-    Pilha *pTemp = NULL;
+    STACKS *stack = NULL;
+    STACKS *op_stack = NULL;
 
-    printf( "Operacao Infixa: " );
-    leOperacao( &pPos, &pTemp );
-    printf( "Operacao Posfixa: " );
-    imprime( pPos );
-    printf( "\n" );
+    printf("Operacao Infixa: ");
+    read(&stack, &op_stack);
+    printf("Operacao Posfixa: ");
+    showing(stack);
+    printf("%s\n", infix);
 
     return 0;
 }
