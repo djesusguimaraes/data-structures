@@ -57,15 +57,39 @@ double operation(double left, char op, double right)
 	switch (op)
 	{
 	case '+':
+		printf("\n\t-> %.2lf + %.2lf\n", left, right);
 		return left + right;
 	case '-':
+		if (right > left && right > 0)
+		{
+			printf("\n\t-> %.2lf - %.2lf\n", right, left);
+			return right - left;
+		}
+		printf("\n\t-> %.2lf - %.2lf\n", left, right);
 		return left - right;
 	case '*':
+		printf("\n\t-> %.2lf * %.2lf\n", left, right);
 		return left * right;
 	case '/':
+		printf("\n\t-> %.2lf / %.2lf\n", right, left);
 		return right / left;
 	default:
 		return 0.0;
+	}
+}
+
+void showing(NO *topo)
+{
+	if (topo)
+	{
+		char output[255];
+		showing(topo->next);
+		snprintf(output, 255, "%.2lf", topo->value);
+		printf("%s ", output);
+	}
+	else
+	{
+		printf("\n");
 	}
 }
 
@@ -92,9 +116,9 @@ void resolve_notation(char expression[])
 				result = strtol(players, NULL, 10);
 				stack_up(stack, result);
 			}
+			showing(stack->top);
 			players = strtok(NULL, " ");
 		}
 		left = unstack(stack);
-		printf("%.2lf", left);
 	}
 }

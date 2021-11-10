@@ -10,6 +10,23 @@ typedef struct _STACKS
     struct _STACKS *next;
 } STACKS;
 
+void show(STACKS *topo);
+void read(STACKS **stack, STACKS **op_stack);
+void stackup(STACKS **pilha, STACKS *aux, char op);
+void transfer(STACKS **stack, STACKS **op_stack, STACKS *aux);
+
+char convert()
+{
+    STACKS *stack = NULL;
+    STACKS *op_stack = NULL;
+
+    printf("\nInfixa: ");
+    read(&stack, &op_stack);
+    printf("\n\nPos-fixa: ");
+    show(stack);
+    return *infix;
+}
+
 void transfer(STACKS **stack, STACKS **op_stack, STACKS *aux)
 {
     aux = (*op_stack)->next;
@@ -18,12 +35,13 @@ void transfer(STACKS **stack, STACKS **op_stack, STACKS *aux)
     *op_stack = aux;
 }
 
-void stack_up(STACKS **pilha, STACKS *aux, char op)
+void stackup(STACKS **pilha, STACKS *aux, char op)
 {
     aux = (STACKS *)malloc(sizeof(STACKS));
     aux->op = op;
     aux->next = *pilha;
     *pilha = aux;
+    show(aux);
 }
 
 void read(STACKS **stack, STACKS **op_stack)
@@ -45,7 +63,7 @@ void read(STACKS **stack, STACKS **op_stack)
                 transfer(&(*stack), &(*op_stack), aux);
             }
 
-            stack_up(&(*op_stack), aux, op);
+            stackup(&(*op_stack), aux, op);
 
             break;
 
@@ -57,7 +75,7 @@ void read(STACKS **stack, STACKS **op_stack)
                 transfer(&(*stack), &(*op_stack), aux);
             }
 
-            stack_up(&(*op_stack), aux, op);
+            stackup(&(*op_stack), aux, op);
 
             break;
 
@@ -77,12 +95,12 @@ void read(STACKS **stack, STACKS **op_stack)
             break;
 
         case '(':
-            stack_up(&(*op_stack), aux, op);
+            stackup(&(*op_stack), aux, op);
 
             break;
 
         default:
-            stack_up(&(*stack), aux, op);
+            stackup(&(*stack), aux, op);
 
             break;
         }
@@ -96,25 +114,15 @@ void read(STACKS **stack, STACKS **op_stack)
     }
 }
 
-void showing(STACKS *topo)
+void show(STACKS *topo)
 {
     if (topo)
     {
-        showing(topo->next);
+        show(topo->next);
         printf("%c ", topo->op);
     }
-}
-
-int main()
-{
-    STACKS *stack = NULL;
-    STACKS *op_stack = NULL;
-
-    printf("Operacao Infixa: ");
-    read(&stack, &op_stack);
-    printf("Operacao Posfixa: ");
-    showing(stack);
-    printf("%s\n", infix);
-
-    return 0;
+    else
+    {
+        printf("\n");
+    }
 }
