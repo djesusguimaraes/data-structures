@@ -52,62 +52,47 @@ void read(STACKS **stack, STACKS **op_stack)
     scanf("%c", &op);
     while (op != '\n')
     {
-
         switch (op)
         {
         case '+':
         case '-':
-
             while ((*op_stack) && ((*op_stack)->op != '('))
             {
                 transfer(&(*stack), &(*op_stack), aux);
             }
-
             stackup(&(*op_stack), aux, op);
-
             break;
-
         case '*':
         case '/':
-
             while ((*op_stack) && ((*op_stack)->op != '+' && (*op_stack)->op != '-' && (*op_stack)->op != '('))
             {
                 transfer(&(*stack), &(*op_stack), aux);
             }
-
             stackup(&(*op_stack), aux, op);
-
             break;
-
         case ')':
             while ((*op_stack) && ((*op_stack)->op != '('))
             {
                 transfer(&(*stack), &(*op_stack), aux);
             }
-
             if ((*op_stack) && (*op_stack)->op == '(')
             {
                 aux = *op_stack;
                 *op_stack = (*op_stack)->next;
                 free(aux);
             }
-
             break;
 
         case '(':
             stackup(&(*op_stack), aux, op);
-
             break;
 
         default:
             stackup(&(*stack), aux, op);
-
             break;
         }
-
         scanf("%c", &op);
     }
-
     while (*op_stack)
     {
         transfer(&(*stack), &(*op_stack), aux);
